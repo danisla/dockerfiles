@@ -7,7 +7,7 @@ On startup, you have to tell the netbsd kernel where the boot drive is, in this 
 
 To build this image, installing NetBSD with `qemu-system-sparc64` and the ISO is very easy, the ISO can boot directly using the qemu command below and entering `cd0a` when the kernel prompts for a boot device.
 
-The prepared image file is not included in the git repository but it can be copied out of the docker image or downloaded [here](drive.google.com).
+The prepared image file is not included in the git repository but it can be copied out of the docker image or downloaded [here](https://drive.google.com/file/d/0B19tauKQb2iuNlBYU1BNX0o0S0k/view?usp=sharing).
 
 ```
 qemu-system-sparc64 \
