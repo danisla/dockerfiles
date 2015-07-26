@@ -9,7 +9,7 @@ http://tyom.blogspot.com/2013/03/debiansparc64-wheezy-under-qemu-how-to.html
 
 Creating the base image took about 5 hours, emulated IO is very slow. To save time, the clean install filesystem image is included in this docker image. The total docker image size is about 1.9G.
 
-The prepared image file is not included in the git repository but it can be copied out of the docker image or downloaded [here](drive.google.com).
+The prepared image file is not included in the git repository but it can be copied out of the docker image or downloaded [here](https://drive.google.com/file/d/0B19tauKQb2iuWUlsY1dER0VNZ1U/view?usp=sharing).
 
 ## Running
 
