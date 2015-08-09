@@ -1,6 +1,6 @@
 # Dockerfile for Subsonic
 
-Dockerfile for Subsonic music streamer: http://www.subsonic.org/
+Dockerfile for Subsonic music streamer: www.subsonic.org
 
 Image is built with transcoding support via [static ffmpeg](http://johnvansickle.com/ffmpeg/) binaries. I could not find a way to re-route the path to the transcode libraries so they are stuck under the state directory where logs are generated. If you mount the state directory when running the container, these binaries will not be available so the entrypoint script [startup.sh](./startup.sh) copies them to `/opt/app/state/transcode` at runtime. If someone finds a way around this, pull requests are welcome. 
 
