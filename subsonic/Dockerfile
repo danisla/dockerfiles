@@ -1,4 +1,14 @@
+# subsonic docker image
+# Running:
+# docker run -d --name subsonic \
+#   -p 4040:4040 \
+#   -v /mnt/subsonic:/opt/app/state \
+#   -v /mnt/music:/mnt/music
+#   danisla/subsonic 1000
+
 FROM java:8-jre
+
+MAINTAINER dan.isla@gmail.com
 
 RUN apt-get update
 RUN apt-get install -y xz-utils sudo
