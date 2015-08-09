@@ -14,7 +14,7 @@ Mount your music dir from your host to the container directory: `/mnt/music`.
 
 The argument to the entrypoint script [startup.sh](./startup.sh) is the UID of the container's `subsonic` user. This user is created at runtime with the UID you provide to keep the writes to your music directory done within the container in sync with your host filesystem. The default UID is `1000`.
 
-```
+```sh
 docker run -d --name subsonic \
   -p 4040:4040 \
   -e ${SUBSONIC_MAX_MEMORY:-512} \
@@ -23,6 +23,7 @@ docker run -d --name subsonic \
   -v /mnt/music:/mnt/music
   danisla/subsonic 1000
 ```
+---
 
 Runtime environment variables:
 
