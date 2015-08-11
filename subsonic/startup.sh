@@ -12,24 +12,25 @@ cleanup
 STATE_DIR=/opt/app/state
 
 # Create the subsonic user using provided uid. 
-SUBSONIC_UID=${1:-1000}
-id ${SUBSONIC_UID} >/dev/null 2>&1
+SUBSONIC_UID=${1:-${SUBSONIC_UID:-1000}}
+UNAME=`id -u -n ${SUBSONIC_UID} 2>/dev/null`
 if [[ $? -ne 0 ]]; then
   echo "INFO: Creating subsonic user with uid and gid: $SUBSONIC_UID"
   groupadd -g $SUBSONIC_UID subsonic
   useradd -g $SUBSONIC_UID -u $SUBSONIC_UID subsonic
+  UNAME=subsonic
 fi
 
-chown -R subsonic:subsonic /opt/app/state
+chown -R ${UNAME}:${UNAME} /opt/app/state
 
 # Copy the transcode binaries
 if [[ ! -d ${STATE_DIR}/transcode ]]; then
-  sudo -u subsonic mkdir -p ${STATE_DIR}/transcode
+  sudo -u ${UNAME} mkdir -p ${STATE_DIR}/transcode
 fi
 echo "INFO: Copying transcode binaries to state dir"
-sudo -u subsonic cp -Rf /opt/ffmpeg/* ${STATE_DIR}/transcode/
+sudo -u ${UNAME} cp -Rf /opt/ffmpeg/* ${STATE_DIR}/transcode/
 
-sudo -u subsonic /usr/bin/subsonic \
+sudo -u ${UNAME} /usr/bin/subsonic \
      --max-memory=${SUBSONIC_MAX_MEMORY:-512} \
      --home=${STATE_DIR} \
      --port=4040 \
