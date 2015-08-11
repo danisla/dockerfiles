@@ -2,6 +2,8 @@
 
 Docker stack that runs a private [ownCloud](https://owncloud.com/) and [Subsonic](http://www.subsonic.org/pages/index.jsp) instance.
 
+This has been tested to work on [Digital Ocean](https://docs.docker.com/machine/) with docker-machine and a 512MB droplet.
+
 ## Setup
 
 Private data and Nginx config are loaded via environment variables. Todo this, first copy your SSL certs and then run the provided scripts to base64 encode and save them to env files.
