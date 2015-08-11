@@ -1,0 +1,42 @@
+owncloud:
+  image: owncloud:8.1
+  restart: always
+  links:
+    - postgres:postgres
+  volumes:
+    - /store/cosmos/owncloud/data:/var/www/html
+
+postgres:
+  image: postgres:9
+  restart: always
+  environment:
+    - POSTGRES_USER=owncloud
+    - POSTGRES_PASSWORD
+    - PGDATA=/var/lib/postgresql/data/pgdata
+  volumes:
+    - /store/cosmos/pgdata:/var/lib/postgresql/data/pgdata
+
+subsonic:
+  image: danisla/subsonic:5.2.1
+  restart: always
+  volumes:
+    - /store/cosmos/subsonic:/opt/app/state
+    - /store/cosmos/owncloud/data/data/cosmos/files:/mnt/music:rw
+  environment:
+    - SUBSONIC_UID=33
+    - SUBSONIC_MAX_MEMORY=512
+    - SUBSONIC_CONTEXT_PATH=/
+
+nginx:
+  image: nginx:latest
+  command: bash -c 'base64 -d <<< $SSL_CERT > /etc/ssl/private/server.crt ; base64 -d <<< $SSL_KEY > /etc/ssl/private/server.key ; base64 -d <<< $DEFAULT_CONF > /etc/nginx/conf.d/default.conf ; nginx -g "daemon off;"'
+  restart: always 
+  env_file:
+    - ./conf/nginx_conf.env
+    - ./conf/ssl_certs.env
+  ports:
+    - 80:80
+    - 443:443
+  links:
+    - owncloud:owncloud
+    - subsonic:subsonic
