@@ -25,7 +25,16 @@ docker run -d --name subsonic \
 ```
 ---
 
-Runtime environment variables:
+## Environment variables:
 
-- `SUBSONIC_CONTEXT_PATH`: Set this to a context path if you are running subsonic behind a proxy and it is not the at the root path. For example, to make subsonic available at: `https://homeserver.example.com/subsonic` pass `-e SUBSONIC_CONTEXT_PATH=/subsonic`
-- `SUBSONIC_MAX_MEMORY`: Set the max memory for the JVM, you will probably have to increase this if you have a large music library. Default is 512 (megabytes).
+### SUBSONIC_UID
+
+The UID of the container's `subsonic` user. This user is created at runtime with the UID you provide to keep the writes to your music directory done within the container in sync with your host filesystem. The default UID is `1000`.
+
+### SUBSONIC_CONTEXT_PATH
+
+Set this to a context path if you are running subsonic behind a proxy and it is not the at the root path. For example, to make subsonic available at: `https://homeserver.example.com/subsonic` pass `-e SUBSONIC_CONTEXT_PATH=/subsonic`
+
+### SUBSONIC_MAX_MEMORY
+
+Set the max memory for the JVM, you will probably have to increase this if you have a large music library. Default is 512 (megabytes).
