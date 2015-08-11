@@ -12,7 +12,7 @@ cleanup
 STATE_DIR=/opt/app/state
 
 # Create the subsonic user using provided uid. 
-SUBSONIC_UID=${1:-${SUBSONIC_UID:-1000}}
+SUBSONIC_UID=${SUBSONIC_UID:-${1:-1000}}
 UNAME=`id -u -n ${SUBSONIC_UID} 2>/dev/null`
 if [[ $? -ne 0 ]]; then
   echo "INFO: Creating subsonic user with uid and gid: $SUBSONIC_UID"
