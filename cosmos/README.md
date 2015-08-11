@@ -2,6 +2,15 @@
 
 Docker stack that runs a private [ownCloud](https://owncloud.com/) and [Subsonic](http://www.subsonic.org/pages/index.jsp) instance.
 
+## Setup
+
+Private data and Nginx config are loaded via environment variables. Todo this, first copy your SSL certs and then run the provided scripts to base64 encode and save them to env files.
+
+1. Copy your SSL certs to the conf/ssl directory as `server.crt` and `server.key`.
+2. Run: `cd conf ; ./make_ssl_env` to encode the SSL cert and key and save it to an env file.
+3. Edit the `conf/default.conf` file to match your domain.
+4. Run: `./make_nginx_conf_env` to encode the conf and save it to an env file.
+
 ## Starting
 
 Source private env file that exports `POSTGRES_PASSWORD` variable.
