@@ -1,5 +1,8 @@
+# Tags and Dockerfile links
+
+- `qemu-3.2.0_debian-7.8.0`, `latest` ([Dockerfile]())
+
 # Debian 7.8.0 (wheezy) sparc64 qemu image
-----
 
 Built with qemu 2.3.0 from [tianon/qemu](https://registry.hub.docker.com/u/tianon/qemu/) base image.
 
@@ -13,7 +16,7 @@ The prepared image file is not included in the git repository but it can be copi
 
 ## Running
 
-    docker run -p 2023:2023 danisla/debian-sparc64:latest
+    docker run -it -p 2023:2023 danisla/debian-sparc64:latest
 
 This starts qemu but waits for a telnet connection to boot the kernel
 
