@@ -1,12 +1,12 @@
 # Tags and Dockerfile links
 
-- `qemu-3.2.0_netbsd-6.1.5`, `latest` ([Dockerfile](https://github.com/danisla/dockerfiles/blob/885f8353659eea5ad89b86593152ada087fcd07d/netbsd-sparc64/Dockerfile))
+- [`qemu-3.2.0_netbsd-6.1.5`, `latest` (Dockerfile)](https://github.com/danisla/dockerfiles/blob/885f8353659eea5ad89b86593152ada087fcd07d/netbsd-sparc64/Dockerfile))
 
 # NetBSD 6.1.5 sparc64 qemu image
 
 This image is very fast and uses a 4G `qcow2` disk image format with working networking. The total docker image size is about 1.2G.
 
-On startup, you have to tell the netbsd kernel where the boot drive is, in this case, use `wd0a` and all the defaults for following questions.
+On startup, you have to tell the qnetbsd kernel where the boot drive is, in this case, use `wd0a` and all the defaults for following questions.
 
 To build this image, installing NetBSD with `qemu-system-sparc64` and the ISO is very easy, the ISO can boot directly using the qemu command below and entering `cd0a` when the kernel prompts for a boot device.
 
