@@ -1,10 +1,10 @@
 # Tags and Dockerfile links
 
-- `qemu-3.2.0_debian-7.8.0`, `latest` ([Dockerfile](https://github.com/danisla/dockerfiles/blob/0e03e48e997796b4292f58acffe7110fc0e5666a/debian-sparc64/Dockerfile))
+- <a href="https://github.com/danisla/dockerfiles/blob/0e03e48e997796b4292f58acffe7110fc0e5666a/debian-sparc64/Dockerfile">`qemu-3.2.0_debian-7.8.0`, `latest` (Dockerfile)</a>
 
 # Debian 7.8.0 (wheezy) sparc64 qemu image
 
-Built with qemu 2.3.0 from [tianon/qemu](https://registry.hub.docker.com/u/tianon/qemu/) base image.
+Built with qemu 2.3.0 from [debian:stretch](https://registry.hub.docker.com/_/debian/) base image.
 
 The base image was built using this guide:
 
