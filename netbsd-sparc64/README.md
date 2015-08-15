@@ -1,5 +1,8 @@
+# Tags and Dockerfile links
+
+- `qemu-3.2.0_netbsd-6.1.5`, `latest` [Dockerfile]()
+
 # NetBSD 6.1.5 sparc64 qemu image
-----
 
 This image is very fast and uses a 4G `qcow2` disk image format with working networking. The total docker image size is about 1.2G.
 
@@ -24,7 +27,7 @@ The clean install of the filesystem is relatively small ~500M so the filesystem 
 
 ## Running
 
-    docker run -p 2023:2023 danisla/netbsd-sparc64:latest
+    docker run -it -p 2023:2023 danisla/netbsd-sparc64:latest
 
 This starts qemu but waits for a telnet connection to boot the kernel
 

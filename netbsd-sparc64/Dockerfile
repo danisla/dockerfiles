@@ -6,7 +6,16 @@
 #   user/pass: netbsd/netbsd2015
 #   root pass: netbsd2015
 
-FROM tianon/qemu
+FROM debian:stretch
+
+MAINTAINER dan.isla@gmail.com
+
+RUN apt-get update
+
+RUN apt-get install -y --no-install-recommends \
+  qemu-system \
+  qemu-utils \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt/app
 
