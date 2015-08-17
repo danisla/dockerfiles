@@ -1,3 +1,6 @@
+# Tags and Dockerfiles
+- `5.2.1`, `latest` ([Dockerfile](https://github.com/danisla/dockerfiles/blob/subsonic-5.2.1/subsonic/Dockerfile))
+
 # Dockerfile for Subsonic
 
 Dockerfile for Subsonic music streamer: www.subsonic.org
