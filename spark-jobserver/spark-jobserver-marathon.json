@@ -7,7 +7,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "docker.io/danisla/spark-jobserver:0.6.0.spark-1.5.1"
+      "image": "docker.io/danisla/spark-jobserver:0.6.0.mesos-0.23.0.spark-1.5.1"
     }
   },
   "ports": [
@@ -15,7 +15,7 @@
   ],
   "env": {
       "SPARK_MASTER": "mesos://zk://zk01.local:2181,zk02.local:2181,zk03.local:2181/mesos",
-      "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE": "docker.io/danisla/spark:1.5.1"
+      "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE": "docker.io/danisla/spark:1.5.1-hadoop2.4"
   },
   "upgradeStrategy": {
     "minimumHealthCapacity": 0.0
