@@ -1,0 +1,36 @@
+{
+  "id": "/spark/jobserver",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "sed -i 's/port = 8090/port = ${?SPARK_JOBSERVER_PORT}/g' /app/docker.conf ; export SPARK_JOBSERVER_PORT=$PORT0 ; /app/server_start.sh --conf spark.master=${SPARK_MASTER} --conf --conf spark.mesos.coarse=true --conf spark.mesos.executor.docker.image=${SPARK_MESOS_EXECUTOR_DOCKER_IMAGE} --conf spark.mesos.executor.home=/opt/spark",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "docker.io/danisla/spark-jobserver:0.6.0.spark-1.5.1"
+    }
+  },
+  "ports": [
+      0
+  ],
+  "env": {
+      "SPARK_MASTER": "mesos://zk://zk01.local:2181,zk02.local:2181,zk03.local:2181/mesos",
+      "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE": "docker.io/danisla/spark:1.5.1"
+  },
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.0
+  },
+  "backoffSeconds": 15,
+  "backoffFactor": 1.15,
+  "healthChecks": [
+    {
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 120,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}
