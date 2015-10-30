@@ -17,7 +17,9 @@ EXPOSE 4040
 VOLUME /mnt/music
 VOLUME /opt/app/state
 
-RUN wget "http://downloads.sourceforge.net/project/subsonic/subsonic/5.3.beta2/subsonic-5.3.beta2.deb?target%3Dsubsonic-5.3.beta2.deb&use_mirror=superb-dca2" -O /tmp/subsonic.deb
+ENV SUBSONIC_VERSION 5.3
+
+RUN wget "http://downloads.sourceforge.net/project/subsonic/subsonic/${SUBSONIC_VERSION}/subsonic-${SUBSONIC_VERSION}.deb?target%3Dsubsonic-${SUBSONIC_VERSION}.deb&use_mirror=superb-dca2" -O /tmp/subsonic.deb
 RUN dpkg -i /tmp/subsonic.deb
 RUN rm -rf /tmp/subsonic.deb
 
