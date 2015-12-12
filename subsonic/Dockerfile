@@ -6,7 +6,7 @@
 #   -v /mnt/music:/mnt/music
 #   danisla/subsonic 1000
 
-FROM java:9-jre
+FROM java:7-jre
 
 MAINTAINER dan.isla@gmail.com
 
