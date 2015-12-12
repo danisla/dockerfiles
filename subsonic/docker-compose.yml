@@ -1,0 +1,13 @@
+home:
+  image: danisla/subsonic:5.3
+  restart: always
+  volumes:
+    - /store/subsonic-state:/opt/app/state:rw
+    - /store/mp3:/mnt/music:rw 
+  environment:
+    SUBSONIC_UID: 1000
+    SUBSONIC_MAX_MEMORY: 1000
+    SUBSONIC_CONTEXT_PATH: /subsonic
+    LANG: en_US.UTF-8
+  ports:
+    - 4040:4040
