@@ -1,0 +1,6 @@
+avahi:
+  build: .
+  net: host
+  environment:
+    AVAHI_HOST: docker-default
+    AVAHI_DOMAIN: local
