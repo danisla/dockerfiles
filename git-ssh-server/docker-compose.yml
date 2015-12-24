@@ -1,0 +1,6 @@
+gitssh:
+    build: .
+    ports:
+        - "2222:22"
+    volumes:
+        - ./pub_keys:/etc/ssh/keys:ro
