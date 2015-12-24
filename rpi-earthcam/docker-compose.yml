@@ -1,0 +1,10 @@
+earthcam:
+    image: danisla/rpi-earthcam
+    volumes:
+        - /opt/vc:/opt/vc:ro
+    entrypoint: bash
+    command: -c "/usr/local/bin/stream.sh rtmp://video1.earthcam.com:1935/earthcamtv/Stream1"
+    devices:
+        - /dev/vchiq:/dev/vchiq
+        - /dev/fb0:/dev/fb0
+        - /dev/snd:/dev/snd
