@@ -8,6 +8,5 @@ home:
     SUBSONIC_UID: 1000
     SUBSONIC_MAX_MEMORY: 1000
     SUBSONIC_CONTEXT_PATH: /subsonic
-    LANG: en_US.UTF-8
   ports:
     - 4040:4040

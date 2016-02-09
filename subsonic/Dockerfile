@@ -10,8 +10,16 @@ FROM java:8-jre
 
 MAINTAINER dan.isla@gmail.com
 
-RUN apt-get update
-RUN apt-get install -y xz-utils sudo
+ENV DEBIAN_FRONTEND noninteractive 
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  apt-utils xz-utils sudo locales 
+
+ENV LANGUAGE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+RUN sed -i 's/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+  locale-gen && dpkg-reconfigure locales && update-locale LANG=${LANG}
 
 EXPOSE 4040
 VOLUME /mnt/music
@@ -19,13 +27,14 @@ VOLUME /opt/app/state
 
 ENV SUBSONIC_VERSION 6.0.beta1
 
-RUN wget "http://downloads.sourceforge.net/project/subsonic/subsonic/${SUBSONIC_VERSION}/subsonic-${SUBSONIC_VERSION}.deb?target%3Dsubsonic-${SUBSONIC_VERSION}.deb&use_mirror=superb-dca2" -O /tmp/subsonic.deb
-RUN dpkg -i /tmp/subsonic.deb
-RUN rm -rf /tmp/subsonic.deb
+#RUN wget "http://downloads.sourceforge.net/project/subsonic/subsonic/${SUBSONIC_VERSION}/subsonic-${SUBSONIC_VERSION}.deb?target%3Dsubsonic-${SUBSONIC_VERSION}.deb&use_mirror=superb-dca2" -O /tmp/subsonic.deb
+RUN wget "http://subsonic.org/download/subsonic-${SUBSONIC_VERSION}.deb" -O /tmp/subsonic.deb && \
+  dpkg -i /tmp/subsonic.deb && \
+  rm -rf /tmp/subsonic.deb
 
-RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz -O /tmp/ffmpeg-release-64bit-static.tar.xz
-RUN mkdir -p /opt/ffmpeg
-RUN tar xf /tmp/ffmpeg-release-64bit-static.tar.xz -C /opt/ffmpeg --strip-components=1
+RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz -O /tmp/ffmpeg-release-64bit-static.tar.xz && \
+  mkdir -p /opt/ffmpeg && \
+  tar xf /tmp/ffmpeg-release-64bit-static.tar.xz -C /opt/ffmpeg --strip-components=1
 
 WORKDIR /opt/app
 ENV SUBSONIC_CONTEXT_PATH /
