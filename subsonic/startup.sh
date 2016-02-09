@@ -36,6 +36,8 @@ cat > /etc/default/subsonic << EOM
 SUBSONIC_ARGS="--max-memory=${SUBSONIC_MAX_MEMORY:-512} --home=${STATE_DIR} --port=4040 --default-music-folder=/mnt/music --context-path=${SUBSONIC_CONTEXT_PATH}"
 SUBSONIC_USER=${UNAME}
 export LANG=${LANG}
+export LANGUAGE=${LANG}
+export LC_ALL=${LANG}
 EOM
 
 service subsonic start
