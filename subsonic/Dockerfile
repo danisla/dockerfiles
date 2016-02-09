@@ -6,7 +6,7 @@
 #   -v /mnt/music:/mnt/music
 #   danisla/subsonic 1000
 
-FROM java:7-jre
+FROM java:8-jre
 
 MAINTAINER dan.isla@gmail.com
 
@@ -17,7 +17,7 @@ EXPOSE 4040
 VOLUME /mnt/music
 VOLUME /opt/app/state
 
-ENV SUBSONIC_VERSION 5.3
+ENV SUBSONIC_VERSION 6.0.beta1
 
 RUN wget "http://downloads.sourceforge.net/project/subsonic/subsonic/${SUBSONIC_VERSION}/subsonic-${SUBSONIC_VERSION}.deb?target%3Dsubsonic-${SUBSONIC_VERSION}.deb&use_mirror=superb-dca2" -O /tmp/subsonic.deb
 RUN dpkg -i /tmp/subsonic.deb
