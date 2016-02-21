@@ -1,0 +1,23 @@
+version: '2'
+services:
+    server:
+        image: danisla/openvpn-as:2.0.24
+        ports:
+            - "943:943"
+            - "443:443"
+            - "1194:1194/udp"
+        cap_add:
+            - NET_ADMIN
+        devices:
+            - "/dev/net/tun:/dev/net/tun"
+        volumes:
+            - server_data:/usr/local/openvpn_as/etc/db:rw
+        environment:
+            USE_AWS_PUBLIC_IP: ${USE_AWS_PUBLIC_IP}
+            CONFIG_JSON_DATA: ${CONFIG_JSON_DATA}
+            USER_JSON_DATA: ${USER_JSON_DATA}
+            AS_ADMIN_PASS_DATA: ${AS_ADMIN_PASS_DATA}
+
+volumes:
+    server_data:
+        driver: local
