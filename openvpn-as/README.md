@@ -8,6 +8,7 @@
 Exporting config to ENV vars:
 
 ```
+export USE_CLOUD_PUBLIC_IP="true"
 export USER_JSON_DATA=$(cat users.json | base64)
 export CONFIG_JSON_DATA=$(cat config.json | base64)
 export AS_ADMIN_PASS_DATA=$(read -s -p "Password: " MYPASS ; echo -n ${MYPASS} | base64)

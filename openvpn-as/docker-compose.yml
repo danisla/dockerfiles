@@ -13,7 +13,8 @@ services:
         volumes:
             - server_data:/usr/local/openvpn_as/etc/db:rw
         environment:
-            USE_AWS_PUBLIC_IP: ${USE_AWS_PUBLIC_IP}
+            USE_CLOUD_PUBLIC_IP:
+            USE_CLOUD_LOCAL_IP:
             CONFIG_JSON_DATA: ${CONFIG_JSON_DATA}
             USER_JSON_DATA: ${USER_JSON_DATA}
             AS_ADMIN_PASS_DATA: ${AS_ADMIN_PASS_DATA}
