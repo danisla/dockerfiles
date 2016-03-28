@@ -10,10 +10,10 @@ FROM java:8-jre
 
 MAINTAINER dan.isla@gmail.com
 
-ENV DEBIAN_FRONTEND noninteractive 
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  apt-utils xz-utils sudo locales 
+  apt-utils xz-utils sudo locales
 
 ENV LANGUAGE en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -25,7 +25,7 @@ EXPOSE 4040
 VOLUME /mnt/music
 VOLUME /opt/app/state
 
-ENV SUBSONIC_VERSION 6.0.beta1
+ENV SUBSONIC_VERSION 6.0.beta2
 
 RUN wget "http://subsonic.org/download/subsonic-${SUBSONIC_VERSION}.deb" -O /tmp/subsonic.deb && \
   dpkg -i /tmp/subsonic.deb && \
