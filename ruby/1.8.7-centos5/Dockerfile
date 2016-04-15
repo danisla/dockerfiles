@@ -10,5 +10,4 @@ RUN buildDeps='curl libyaml-devel glibc-headers autoconf gcc-c++ glibc-devel pat
     cd /tmp/rubygems-1.6.2 && ruby setup.rb && \
     gem update --system 1.6.2 && \
     gem install bundler --no-ri --no-rdoc && \
-    yum remove -y $buildDeps && \
     yum clean all
