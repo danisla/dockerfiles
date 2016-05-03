@@ -1,5 +1,5 @@
 home:
-  image: danisla/subsonic:5.3
+  image: danisla/subsonic:6.0
   restart: always
   volumes:
     - /store/subsonic-state:/opt/app/state:rw

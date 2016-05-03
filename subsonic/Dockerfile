@@ -25,7 +25,7 @@ EXPOSE 4040
 VOLUME /mnt/music
 VOLUME /opt/app/state
 
-ENV SUBSONIC_VERSION 6.0.beta2
+ENV SUBSONIC_VERSION 6.0
 
 RUN wget "http://subsonic.org/download/subsonic-${SUBSONIC_VERSION}.deb" -O /tmp/subsonic.deb && \
   dpkg -i /tmp/subsonic.deb && \
