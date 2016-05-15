@@ -21,7 +21,7 @@ When running, you should mount a directory to save the state (index database and
 
 Mount your music dir from your host to the container directory: `/mnt/music`.
 
-The argument to the entrypoint script [startup.sh](./startup.sh) is the UID of the container's `subsonic` user. This user is created at runtime with the UID you provide to keep the writes to your music directory done within the container in sync with your host filesystem. The default UID is `1000`.
+The argument to the entrypoint script [startup.sh](./startup.sh) is the UID of the container's `subsonic` user. This user is created at runtime with the UID you provide to keep the writes to your music directory done within the container in sync with your host filesystem. The default UID and GID are `1000`.
 
 ```sh
 docker run -d --name subsonic \
@@ -30,7 +30,7 @@ docker run -d --name subsonic \
   -e ${SUBSONIC_CONTEXT_PATH:-/} \
   -v /mnt/subsonic:/opt/app/state \
   -v /mnt/music:/mnt/music
-  danisla/subsonic 1000
+  danisla/subsonic 1000 1000
 ```
 ---
 
@@ -39,6 +39,10 @@ docker run -d --name subsonic \
 ### SUBSONIC_UID
 
 The UID of the container's `subsonic` user. This user is created at runtime with the UID you provide to keep the writes to your music directory done within the container in sync with your host filesystem. The default UID is `1000`.
+
+### SUBSONIC_GID
+
+The GID of the container's `subsonic` user. Thi group is created at runtime with the GID you provide to keep the writes to your music directory done within the container in sync with your host filesystem. The default GID is `1000`.
 
 ### SUBSONIC_CONTEXT_PATH
 

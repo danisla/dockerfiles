@@ -13,11 +13,12 @@ STATE_DIR=/opt/app/state
 
 # Create the subsonic user using provided uid. 
 SUBSONIC_UID=${SUBSONIC_UID:-${1:-1000}}
+SUBSONIC_GID=${SUBSONIC_GID:-${2:-1000}}
 UNAME=`id -u -n ${SUBSONIC_UID} 2>/dev/null`
 if [[ $? -ne 0 ]]; then
-  echo "INFO: Creating subsonic user with uid and gid: $SUBSONIC_UID"
-  groupadd -g $SUBSONIC_UID subsonic
-  useradd -g $SUBSONIC_UID -u $SUBSONIC_UID subsonic
+  echo "INFO: Creating subsonic user with uid and gid: ${SUBSONIC_UID}:${SUBSONIC_GID}"
+  groupadd -g $SUBSONIC_GID subsonic
+  useradd -g $SUBSONIC_GID -u $SUBSONIC_UID subsonic
   UNAME=subsonic
 fi
 
