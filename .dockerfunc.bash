@@ -29,6 +29,10 @@ function docker-avahi() {
   docker run -d --name avahi-${AVAHI_HOST} --net host --restart always -e AVAHI_HOST=${AVAHI_HOST} danisla/avahi:latest
 }
 
+function docker-mac-ip() {
+  pinata list | awk -F= '/docker-ipv4=/ {print $3}' | awk -F, '{printf $1}'
+}
+
 function docker-install-completion() {
   files=(docker-machine docker-machine-wrapper docker-machine-prompt)
   for f in "${files[@]}"; do
