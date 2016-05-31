@@ -33,6 +33,12 @@ function docker-mac-ip() {
   pinata list | awk -F= '/docker-ipv4=/ {print $3}' | awk -F, '{printf $1}'
 }
 
+function docker-mac-tty() {
+	# Login as root
+	# CTRL-a + k  to exit
+	screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
+}
+
 function docker-install-completion() {
   files=(docker-machine docker-machine-wrapper docker-machine-prompt)
   for f in "${files[@]}"; do
