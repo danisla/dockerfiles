@@ -3,6 +3,7 @@ version: '2'
 services:
   app:
     image: debian:jessie
+    container_name: app
     command: ping www.google.com
     networks:
       - default

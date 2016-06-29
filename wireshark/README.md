@@ -6,7 +6,7 @@ A wireshark stack in docker used to capture packets isolated at the container le
 
 To use this example do the following:
 
-1. Edit the `docker-compose.override.yml` file and add the details for running your app. The service name must be `app` to work with the main `docker-compose.yml` file.
+1. Edit the `docker-compose.override.yml` file and add the details for running your app. The service name must be `app` to work with the main `docker-compose.yml` file. Alternatively, you can set the `APP_NAME` env variable to the name of your running container and the wireshark container will connect to that.
 
 2. Run the VNC desktop container so you can see wireshark.
 
@@ -32,10 +32,10 @@ docker-compose down
 
 ## Running with 1-step Makefile
 
-To run all of the steps with blocking automation (except editing the override file):
+To run all of the steps with blocking automation:
 
 ```
-make
+APP_NAME=app make -e
 ```
 
 When you are done:
