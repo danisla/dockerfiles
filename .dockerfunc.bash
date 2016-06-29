@@ -57,3 +57,13 @@ function gen-ssl-cert() {
     req -new -newkey rsa:2048 -sha1 -days 365 -nodes -x509 -keyout /certs/server.key -out /certs/server.crt \
       -subj "/C=US/ST=California/L=Pasadena/O=Megacorp/OU=IT/CN=${cn}/emailAddress=docker@example.com"
 }
+
+function docker-pf() {
+	[[ $# -eq 0 ]] && echo "USAGE: docker-pf <ssh_key> <user@host> <container name/id> <local port> <dest host:port>" && return 1
+	ssh_key=$1
+	ssh_user_host=$2
+	container=$3
+	local_port=$4
+	dest_host_port=$5
+	socat TCP-LISTEN:${local_port},reuseaddr,fork 'EXEC:ssh -t -i '${ssh_key}' -o ControlMaster=auto -o "ControlPath=/tmp/docker-pf-control-%r@%h:%p" -o ControlPersist=600 '${ssh_user_host}' sudo docker exec -i '${container}' "socat STDIO TCP-CONNECT:'${dest_host_port}'"',pty,raw,echo=0
+}
