@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  wireshark:
+    image: icecrimetest/wireshark
+    container_name: wireshark
+    environment:
+      DISPLAY: ":1.0"
+    cap_add:
+      - NET_ADMIN
+    network_mode: "service:app"
+    volumes:
+      - ./:/hostfs:rw
+      - desktop_tmp:/tmp:rw
+    depends_on:
+      - desktop
+
+  desktop:
+    container_name: desktop
+    image: dorowu/ubuntu-desktop-lxde-vnc
+    ports:
+      - "6080:6080"
+      - "6081:6081"
+    volumes:
+      - ./:/hostfs:rw
+      - desktop_tmp:/tmp:rw
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  desktop_tmp:
+    driver: local

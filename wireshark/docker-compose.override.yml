@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  app:
+    image: debian:jessie
+    command: ping www.google.com
+    networks:
+      - default
