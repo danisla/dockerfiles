@@ -4,4 +4,5 @@ RUN apk update && \
     apk add socat && \
     rm -rf /var/cache/apk/*
 
-ENTRYPOINT ["socat"]
+# Using sh as entrypoint to allow complete shell execution of socat.
+ENTRYPOINT ["sh"]
