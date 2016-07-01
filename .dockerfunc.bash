@@ -58,7 +58,7 @@ function gen-ssl-cert() {
       -subj "/C=US/ST=California/L=Pasadena/O=Megacorp/OU=IT/CN=${cn}/emailAddress=docker@example.com"
 }
 
-function docker-pf() {
+function docker-ssh-pf() {
 	[[ $# -eq 0 ]] && echo "USAGE: docker-pf <ssh_key> <user@host> <container name/id> <local port> <dest host:port>" && return 1
 	ssh_key=$1
 	ssh_user_host=$2
@@ -66,4 +66,23 @@ function docker-pf() {
 	local_port=$4
 	dest_host_port=$5
 	socat TCP-LISTEN:${local_port},reuseaddr,fork 'EXEC:ssh -t -i '${ssh_key}' -o ControlMaster=auto -o "ControlPath=/tmp/docker-pf-control-%r@%h:%p" -o ControlPersist=600 '${ssh_user_host}' sudo docker exec -i '${container}' "socat STDIO TCP-CONNECT:'${dest_host_port}'"',pty,raw,echo=0
+}
+
+function docker-pf() {
+  [[ $# -eq 0 ]] && echo "USAGE: docker-pf <local port> <dest host> <dest port> [<net default: bridge>]" && return 1
+  local_port=$1
+  dest_host=$2
+  dest_port=$3
+  net=${4:-bridge}
+  socat TCP-LISTEN:${local_port},reuseaddr,fork 'EXEC:docker run -i --rm --net='${net}' danisla/socat "-c \"socat STDIO TCP-CONNECT:'${dest_host}'\:'${dest_port}'\""',pty,raw,echo=0
+}
+
+function weave-env() {
+  nohup socat unix-listen:/tmp/weave.sock,reuseaddr,fork 'EXEC:docker run -i --rm -v /var/run/weave/weave.sock\:/weave.sock danisla/socat "-c \"socat STDIO UNIX-CONNECT:/weave.sock\""',pty,raw,echo=0 >/tmp/weave-sock.out 2>&1 &
+  echo "export DOCKER_HOST=unix:///tmp/weave.sock"
+}
+
+function weave-env-stop() {
+  pkill -f ".*socat.*/tmp/weave.sock.*" >/dev/null 2>&1
+  echo "unset DOCKER_HOST"
 }
