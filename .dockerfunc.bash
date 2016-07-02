@@ -88,5 +88,5 @@ function weave-env-stop() {
 }
 
 function docker-mac-ip() {
-  docker run -it --net=host --rm debian:jessie sh -c "ip route get 8.8.8.8 | awk '{print \$NF; exit}'"
+  docker run -it --net=host --rm debian:jessie sh -c "ip route get 8.8.8.8 | awk '{printf \$NF; exit}'"
 }
