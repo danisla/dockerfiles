@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  master:
+    image: danisla/seaweedfs:v0.70
+    entrypoint: bash
+    command:
+      - "-c"
+      - "/usr/bin/weed master -port=9333 -mdir=/mdir -ip=$$(hostname -i)"
+    networks:
+      - default
+
+  redis:
+    image: redis:3
+    networks:
+      - default
+
+  volume:
+    image: danisla/seaweedfs:v0.70
+    entrypoint: bash
+    command:
+      - "-c"
+      - "/usr/bin/weed volume -mserver=master:9333 -dir=/data -port=8080 -ip=$$(hostname -i) -publicUrl=http://localhost:8080 -max=100"
+    networks:
+      - default
+
+  filer:
+    container_name: filer
+    image: danisla/seaweedfs:v0.70
+    entrypoint: bash
+    command:
+      - "-c"
+      - "/usr/bin/weed filer -master=master:9333 -redis.server=redis:2379 -port=8888 -dir=/tmp"
+    ports:
+      - 8888:8888
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - "/dev/fuse:/dev/fuse"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
