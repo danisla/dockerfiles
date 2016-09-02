@@ -90,3 +90,22 @@ function weave-env-stop() {
 function docker-mac-ip() {
   docker run -it --net=host --rm debian:jessie sh -c "ip route get 8.8.8.8 | awk '{printf \$NF; exit}'"
 }
+
+function docker-hub-basic-auth() {
+  cat ~/.docker/config.json | jq -r '.auths."https://index.docker.io/v1/".auth'
+}
+
+function docker-hub-list-tags() {
+  REPO=$1
+  if [[ -z "${REPO}" ]]; then
+    echo "USAGE: docker-hub-list-tags <repo name>"
+    return
+  fi
+  TOKEN=$(curl -sf -H "Authorization: Basic $(docker-hub-basic-auth)" \
+                  -H 'Accept: application/json' \
+                  "https://auth.docker.io/token?service=registry.docker.io&scope=repository:$REPO:pull" | jq -r '.token')
+
+  curl -s -H "Authorization: Bearer $TOKEN" -H "Accept: application/json" \
+             "https://index.docker.io/v2/$REPO/tags/list" |
+               jq -r '.tags | sort'
+}
