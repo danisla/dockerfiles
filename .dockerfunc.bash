@@ -34,9 +34,9 @@ function docker-mac-ip() {
 }
 
 function docker-mac-tty() {
-	# Login as root
-	# CTRL-a + k  to exit
-	screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
+  # Login as root
+  # CTRL-a + k  to exit
+  screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
 }
 
 function docker-install-completion() {
@@ -59,13 +59,13 @@ function gen-ssl-cert() {
 }
 
 function docker-ssh-pf() {
-	[[ $# -eq 0 ]] && echo "USAGE: docker-pf <ssh_key> <user@host> <container name/id> <local port> <dest host:port>" && return 1
-	ssh_key=$1
-	ssh_user_host=$2
-	container=$3
-	local_port=$4
-	dest_host_port=$5
-	socat TCP-LISTEN:${local_port},reuseaddr,fork 'EXEC:ssh -t -i '${ssh_key}' -o ControlMaster=auto -o "ControlPath=/tmp/docker-pf-control-%r@%h:%p" -o ControlPersist=600 '${ssh_user_host}' sudo docker exec -i '${container}' "socat STDIO TCP-CONNECT:'${dest_host_port}'"',pty,raw,echo=0
+  [[ $# -eq 0 ]] && echo "USAGE: docker-pf <ssh_key> <user@host> <container name/id> <local port> <dest host:port>" && return 1
+  ssh_key=$1
+  ssh_user_host=$2
+  container=$3
+  local_port=$4
+  dest_host_port=$5
+  socat TCP-LISTEN:${local_port},reuseaddr,fork 'EXEC:ssh -t -i '${ssh_key}' -o ControlMaster=auto -o "ControlPath=/tmp/docker-pf-control-%r@%h:%p" -o ControlPersist=600 '${ssh_user_host}' sudo docker exec -i '${container}' "socat STDIO TCP-CONNECT:'${dest_host_port}'"',pty,raw,echo=0
 }
 
 function docker-pf() {
