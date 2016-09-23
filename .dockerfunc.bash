@@ -3,6 +3,11 @@ docker-cleanup(){
   docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
 }
 
+docker-backup-cleanup(){
+  docker.backup rm $(docker.backup ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+  docker.backup rmi $(docker.backup images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+
 function docker-machine-default() {
   name=default
   [[ "$(docker-machine status $name)" == "Stopped" ]] && docker-machine start $name
@@ -108,4 +113,12 @@ function docker-hub-list-tags() {
   curl -s -H "Authorization: Bearer $TOKEN" -H "Accept: application/json" \
              "https://index.docker.io/v2/$REPO/tags/list" |
                jq -r '.tags | sort'
+}
+
+function docker-host-root() {
+	docker run -it --rm --entrypoint=sh --privileged --net=host -e sysimage=/host -v /:/host -v /dev:/dev -v /run:/run ubuntu:vivid -c 'nsenter --mount=$sysimage/proc/1/ns/mnt -- sh'
+}
+
+function docker-backup-host-root() {
+	docker.backup run -it --rm --entrypoint=sh --privileged --net=host -e sysimage=/host -v /:/host -v /dev:/dev -v /run:/run ubuntu:vivid -c 'nsenter --mount=$sysimage/proc/1/ns/mnt -- sh'
 }
