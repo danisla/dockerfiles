@@ -122,3 +122,14 @@ function docker-host-root() {
 function docker-backup-host-root() {
 	docker.backup run -it --rm --entrypoint=sh --privileged --net=host -e sysimage=/host -v /:/host -v /dev:/dev -v /run:/run ubuntu:vivid -c 'nsenter --mount=$sysimage/proc/1/ns/mnt -- sh'
 }
+
+function docker-jupyter-start() {
+	docker run -d -p 8888:8888 --name jupyter -v $(PWD):/notebooks:rw jupyter/notebook:4.2.0 && \
+	sh -c 'until `curl -sf http://localhost:8888 >/dev/null`; do echo "Starting Jupyter Notebook in dir: '$(PWD)'..." && sleep 5; done' && \
+	open http://localhost:8888
+}
+
+function docker-jupyter-stop() {
+	docker stop jupyter
+	docker rm jupyter
+}
