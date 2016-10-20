@@ -124,8 +124,8 @@ function docker-backup-host-root() {
 }
 
 function docker-jupyter-start() {
-	docker run -d -p 8888:8888 --name jupyter -v $(PWD):/notebooks:rw jupyter/notebook:4.2.0 && \
-	sh -c 'until `curl -sf http://localhost:8888 >/dev/null`; do echo "Starting Jupyter Notebook in dir: '$(PWD)'..." && sleep 5; done' && \
+	docker run -d -p 8888:8888 --name jupyter -v ${PWD}:/notebooks:rw jupyter/notebook:4.2.0 && \
+	sh -c 'until `curl -sf http://localhost:8888 >/dev/null`; do echo "Starting Jupyter Notebook in dir: '${PWD}'..." && sleep 5; done' && \
 	open http://localhost:8888
 }
 
