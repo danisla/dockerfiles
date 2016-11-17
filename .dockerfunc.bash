@@ -115,6 +115,17 @@ function docker-hub-list-tags() {
                jq -r '.tags | sort'
 }
 
+function gcr-list-tags() {
+  REPO=${1/gcr.io\/}
+  if [[ -z "${REPO}" ]]; then
+    echo "USAGE: gcr-list-tags <repo name>"
+    return
+  fi
+  curl -s -H "Accept: application/json" \
+             "https://gcr.io/v2/${REPO}/tags/list" |
+               jq -r '.tags | sort'
+}
+
 function docker-host-root() {
 	docker run -it --rm --entrypoint=sh --privileged --net=host -e sysimage=/host -v /:/host -v /dev:/dev -v /run:/run ubuntu:vivid -c 'nsenter --mount=$sysimage/proc/1/ns/mnt -- sh'
 }
