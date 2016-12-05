@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
-
 [[ -z "${X10_ADDR}" ]]    && echo "X10_ADDR is not set" && exit 1
 [[ -z "${MOCHAD_PORT_1099_TCP_ADDR}" ]] && echo "MOCHAD_PORT_1099_TCP_ADDR is not set" && exit 1
 [[ -z "${MOCHAD_PORT_1099_TCP_PORT}" ]] && echo "MOCHAD_PORT_1099_TCP_PORT is not set" && exit 1
