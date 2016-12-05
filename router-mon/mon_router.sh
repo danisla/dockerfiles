@@ -43,9 +43,7 @@ log "INFO: Monitor for '$HOST' initialized."
 fail_count=0
 while true; do
 	alive $HOST
-	if [[ $? -eq 0 ]]; then
-		log "INFO: Host '${HOST}' is alive."
-	else
+	if [[ $? -ne 0 ]]; then
 		((fail_count=fail_count+1))
 		log "WARN: Timeout on ${HOST} (${fail_count}/${MAX_FAIL})"
 	fi
