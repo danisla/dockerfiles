@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  mon:
+    build: .
+    container_name: router_mon
+    env_file:
+      - ./mon.env
+    network_mode: "bridge"
+    external_links:
+      - mochad
