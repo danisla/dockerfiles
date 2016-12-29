@@ -144,3 +144,16 @@ function docker-jupyter-stop() {
 	docker stop jupyter
 	docker rm jupyter
 }
+
+function docker-elastic-2-start() {
+  docker run -d \
+    --name elasticsearch \
+    -p 9200:9200 \
+    -p 9300:9300 \
+    elasticsearch:2
+}
+
+function docker-elastic-2-stop() {
+  docker kill elasticsearch
+  docker rm elasticsaerch
+}
