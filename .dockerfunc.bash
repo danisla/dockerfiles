@@ -145,15 +145,55 @@ function docker-jupyter-stop() {
 	docker rm jupyter
 }
 
-function docker-elastic-2-start() {
+function docker-elastic-stack-start() {
+  ES_TAG=$1
+  KIBANA_TAG=$2
+
   docker run -d \
     --name elasticsearch \
     -p 9200:9200 \
     -p 9300:9300 \
-    elasticsearch:2
+    elasticsearch:${ES_TAG} && \
+  docker run -d \
+    --name kibana \
+    -p 5601:5601 \
+    -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
+    --link elasticsearch \
+    kibana:${KIBANA_TAG}
 }
 
-function docker-elastic-2-stop() {
+function docker-elastic-stack-2-start() {
+  # Elasticsearch 2.x with kopf plugin
+
+  docker-elastic-stack-start 2 4 && \
+  docker exec -it elasticsearch sh -c 'bin/plugin install lmenezes/elasticsearch-kopf'
+
+  sh -c 'until `curl -sf http://localhost:9200 >/dev/null`; do echo "Starting Elastic Stack..." && sleep 5; done' && \
+  open http://localhost:5601
+  open http://localhost:9200/_plugin/kopf
+}
+
+function docker-elastic-stack-5-start() {
+  # Elasticsearch 5.x with cerebro app
+  docker-elastic-stack-start 5 5 && \
+  docker run -d \
+    -p 9000:9000 \
+    --name cerebro \
+    --link elasticsearch \
+    --entrypoint=bash \
+    danisla/cerebro:v0.4.1 -c "sed -i -e 's|host = .*|host = \"http://elasticsearch:9200\"|g' /opt/cerebro-0.4.1/conf/application.conf && /opt/cerebro-0.4.1/bin/cerebro"
+
+  sh -c 'until `curl -sf http://localhost:9200 >/dev/null`; do echo "Starting Elastic Stack..." && sleep 5; done' && \
+  open http://localhost:5601
+  sh -c 'until `curl -sf http://localhost:9000 >/dev/null`; do echo "Starting Cerebro..." && sleep 5; done' && \
+  open http://localhost:9000
+}
+
+function docker-elastic-stack-stop() {
+  docker kill cerebro
+  docker rm cerebro
+  docker kill kibana
+  docker rm kibana
   docker kill elasticsearch
-  docker rm elasticsaerch
+  docker rm elasticsearch
 }
