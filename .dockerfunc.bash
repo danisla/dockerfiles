@@ -106,6 +106,10 @@ function docker-hub-list-tags() {
     echo "USAGE: docker-hub-list-tags <repo name>"
     return
   fi
+  if [[ ! -e ~/.docker/config.json ]]; then
+    echo "ERROR: ~/.docker/config.json not found, run: docker login"
+    return
+  fi
   TOKEN=$(curl -sf -H "Authorization: Basic $(docker-hub-basic-auth)" \
                   -H 'Accept: application/json' \
                   "https://auth.docker.io/token?service=registry.docker.io&scope=repository:$REPO:pull" | jq -r '.token')
