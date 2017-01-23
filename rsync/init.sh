@@ -23,5 +23,6 @@ else
   mkdir -p /home/docker
   useradd -u $USERID -g $curr_group -d /home/docker -s /bin/bash docker
   chown docker: /home/docker -R
+  cd /home/docker
   exec sudo -H -u docker $@
 fi
