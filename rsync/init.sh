@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 export curr_group=docker
 if [[ "${GROUPID:-""}" =~ ^[0-9]+$ ]]; then
@@ -20,6 +20,8 @@ fi
 if [[ -z "${GROUPID}" && -z "${USERID}" ]]; then
   exec $@
 else
-  useradd -u $USERID -g $curr_group docker
-  exec sudo -u docker $@
+  mkdir -p /home/docker
+  useradd -u $USERID -g $curr_group -d /home/docker -s /bin/bash docker
+  chown docker: /home/docker -R
+  exec sudo -H -u docker $@
 fi
