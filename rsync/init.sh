@@ -2,9 +2,9 @@
 
 export curr_group=docker
 if [[ "${GROUPID:-""}" =~ ^[0-9]+$ ]]; then
-  export curr_group=$(getent group ${GROUPID})
+  check_group=$(getent group ${GROUPID})
   if [[ $? -eq 0 ]]; then
-    curr_group=${curr_group%%:*}
+    export curr_group=${check_group%%:*}
   else
     groupadd -g $GROUPID $curr_group
   fi
