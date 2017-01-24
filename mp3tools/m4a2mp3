@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+find . | grep m4a$ | while read i
+do
+echo Converting $i into a wav file
+
+TMP_BASE=`date|md5sum`
+TMP_BASE=${TMP_BASE:0:32}
+
+TMP_WAV=$TMP_BASE.wav
+TMP_TEXT=$TMP_BASE.txt
+
+# Read the tag 
+faad -i "$i" 2> /dev/shm/$TMP_TEXT
+
+if [ "$?" != 0 ]; then
+  echo "error running faad"
+  exit 1
+fi
+
+title=`grep ^title: /dev/shm/$TMP_TEXT | sed s/^title:\ //`
+album=`grep ^album: /dev/shm/$TMP_TEXT | sed s/^album:\ //`
+mydate=`grep ^date: /dev/shm/$TMP_TEXT | sed s/^date:\ //`
+track=`grep ^track: /dev/shm/$TMP_TEXT | sed s/^track:\ //`
+album_artist=`grep ^artist: /dev/shm/$TMP_TEXT | sed s/^artist:\ //`
+
+# Try again, this time using 'album_artist' field.
+if test -z "$album_artist"; then
+	album_artist=`grep ^album_artist: /dev/shm/$TMP_TEXT | sed s/^album_artist:\ //`
+fi
+
+# If still no artist then abort.
+if test -z "$album_artist"; then
+	echo "WARN: No artist found in tag for: $i"
+	exit 1
+fi
+
+faad -o /dev/shm/$TMP_WAV "$i" &> /dev/null
+
+echo Converting $TMP_WAV into ${i%.m4a}.mp3
+lame -q 2 --vbr-new -b 320 -V 0 -S /dev/shm/$TMP_WAV "${i%.m4a}.mp3"
+
+if [ "$?" != 0 ]; then
+  echo "error running lame"
+  exit 1
+fi
+
+echo Setting id3 tag info. Artist: $album_artist Album: $album Title: $title Year: ${mydate:0:4} Track: $track
+id3tag -2 --artist="$album_artist" --album="$album" --song="$title" --year="${mydate:0:4}" --track="$track" "${i%.m4a}.mp3"
+
+if [ "$?" != 0 ]; then
+  echo "error running id3tag"
+  exit 1
+fi
+
+rm -f /dev/shm/$TMP_WAV
+rm -f /dev/shm/$TMP_TEXT
+
+done
+
+RES=`ls *.m4a 2>/dev/null`
+if test -n "$RES"; then
+echo "Remove *.m4a? (y/n)" 
+read USERINPUT
+if test "$USERINPUT" == "y"; then
+  rm *.m4a
+fi
+fi
