@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  app:
+    restart: always
+    container_name: s3-ip-update
+    build: .
+    image: danisla/s3-ip-update:v1.0.0
+    network_mode: bridge
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      S3_BUCKET: ${S3_BUCKET}
