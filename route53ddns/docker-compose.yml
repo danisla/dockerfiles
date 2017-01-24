@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  ddns:
+    restart: always
+    stop_signal: SIGKILL
+    network_mode: bridge
+    image: danisla/route53ddns-ruby:v1.0.0
+    environment:
+      HOSTED_ZONE_ID: ${HOSTED_ZONE_ID}
+      SUBDOMAIN: ${SUBDOMAIN}
+    volumes:
+      - "./.aws_secrets:/opt/app/.aws_secrets:ro"
