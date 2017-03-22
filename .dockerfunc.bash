@@ -201,3 +201,7 @@ function docker-elastic-stack-stop() {
   docker kill elasticsearch
   docker rm elasticsearch
 }
+
+function docker-packer {
+  docker run -it --rm -v ${HOME}:${HOME} --env-file <(env|awk '/^.+=/') -w $PWD hashicorp/packer:light $@
+}
