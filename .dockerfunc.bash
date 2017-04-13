@@ -203,5 +203,19 @@ function docker-elastic-stack-stop() {
 }
 
 function docker-packer {
-  docker run -it --rm -v ${HOME}:${HOME} --env-file <(env|awk '/^.+=/') -w $PWD hashicorp/packer:light $@
+  docker run -it --rm -v ${HOME}:${HOME} --env-file <(env|awk '/^.+=/'|grep -v TMPDIR) -w $PWD hashicorp/packer:light $@
+}
+
+function docker-terraform {
+	if [[ -e ${HOME}/.config/gcloud/credentials.json ]]; then
+		GOOGLE_CREDENTIALS="$(cat ${HOME}/.config/gcloud/credentials.json | tr '\n' ' ')"
+	fi
+  GOOGLE_PROJECT=${DEVSHELL_PROJECT_ID:-$(gcloud config get-value project 2>/dev/null)}
+  docker run -it --rm \
+		-v ${HOME}:${HOME} \
+		--env-file <(env|awk '/^.+=/'|grep -v TMPDIR) \
+		-e GOOGLE_CREDENTIALS="${GOOGLE_CREDENTIALS}" \
+		-e GOOGLE_PROJECT="${GOOGLE_PROJECT}" \
+		-w $PWD \
+		hashicorp/terraform:latest $@
 }
