@@ -230,3 +230,7 @@ function spinnaker-versions {
   export SPINNAKER_COMPONENTS="spinnaker-clouddriver spinnaker-deck spinnaker-echo spinnaker-front50 spinnaker-gate spinnaker-igor spinnaker-orca spinnaker-rosco spinnaker" && \
   for c in $SPINNAKER_COMPONENTS; do echo ${c}=`apt-cache madison ${c} | head -1 | cut -d "|" -f2 | sed "s|[[:space:]]||g"`; done'
 }
+
+function docker-go-swagger {
+  docker run --rm -it -v $HOME:$HOME -w $(pwd) quay.io/goswagger/swagger:0.7.4 $@
+}
