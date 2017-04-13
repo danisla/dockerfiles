@@ -219,3 +219,14 @@ function docker-terraform {
 		-w $PWD \
 		hashicorp/terraform:latest $@
 }
+
+function spinnaker-versions {
+  docker run -it --rm --entrypoint=bash ubuntu:trusty -c '
+  echo "Checking latest versions of Spinnaker components in debian repo..." && \
+  apt-get -qq update && apt-get -qq -y --force-yes install curl apt-transport-https >/dev/null && \
+  echo "deb https://dl.bintray.com/spinnaker/debians trusty spinnaker" > /etc/apt/sources.list.d/spinnaker.list && \
+  curl -s -f "https://bintray.com/user/downloadSubjectPublicKey?username=spinnaker" | apt-key add - && \
+  apt-get -qq update && \
+  export SPINNAKER_COMPONENTS="spinnaker-clouddriver spinnaker-deck spinnaker-echo spinnaker-front50 spinnaker-gate spinnaker-igor spinnaker-orca spinnaker-rosco spinnaker" && \
+  for c in $SPINNAKER_COMPONENTS; do echo ${c}=`apt-cache madison ${c} | head -1 | cut -d "|" -f2 | sed "s|[[:space:]]||g"`; done'
+}
