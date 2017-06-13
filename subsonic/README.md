@@ -1,5 +1,5 @@
 # Tags and Dockerfiles
-- `6.0`, `latest`, ([Dockerfile](https://github.com/danisla/dockerfiles/blob/subsonic-6.0-1/subsonic/Dockerfile))
+- `6.1.1`, `latest`, ([Dockerfile](https://github.com/danisla/dockerfiles/blob/subsonic-6.1.1/subsonic/Dockerfile))
 - `6.0.beta2`, ([Dockerfile](https://github.com/danisla/dockerfiles/blob/subsonic-6.0.beta2/subsonic/Dockerfile))
 - `6.0.beta1`, ([Dockerfile](https://github.com/danisla/dockerfiles/blob/subsonic-6.0.beta1/subsonic/Dockerfile))
 - `5.3`, ([Dockerfile](https://github.com/danisla/dockerfiles/blob/subsonic-5.3/subsonic/Dockerfile))
