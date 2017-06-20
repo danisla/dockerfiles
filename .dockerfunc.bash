@@ -234,3 +234,16 @@ function spinnaker-versions {
 function docker-go-swagger {
   docker run --rm -it -v $HOME:$HOME -w $(pwd) quay.io/goswagger/swagger:0.7.4 $@
 }
+
+function docker-1.11.2 {
+	# Compatible with API v1.23
+  URL=https://get.docker.com/builds/Darwin/x86_64/docker-1.11.2.tgz
+  DOCKER_BIN=${HOME}/bin/docker-1.11.2
+  if [[ ! -f "${DOCKER_BIN}" ]]; then
+		echo "Installing $(basename ${DOCKER_BIN}) binary to ${DOCKER_BIN}"
+    curl -sfL "${URL}" | tar xvf -
+    mv docker/docker ${DOCKER_BIN}
+    rm -Rf docker
+	fi
+  ${DOCKER_BIN} $@
+}
