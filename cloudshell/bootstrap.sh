@@ -15,6 +15,10 @@ add-apt-repository \
    stable"
 apt-get update && apt-get install -y docker-ce
 
+# Install docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
 # Google Cloud SDK
 curl -sSL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-158.0.0-linux-x86_64.tar.gz | tar zxf -
 ./google-cloud-sdk/install.sh

@@ -24,7 +24,7 @@ if [[ -z "${GROUPID}" && -z "${USERID}" ]]; then
 else
   mkdir -p /home/${UNAME}
   useradd -u $USERID -g $curr_group -d /home/${UNAME} -s /bin/bash ${UNAME}
-  echo ". /etc/profile.d/cloudshell" >> /home/${UNAME}/.bash_profile
+  ! test -e /home/${UNAME}/.bash_profile && echo ". /etc/profile.d/cloudshell" >> /home/${UNAME}/.bash_profile
   chown ${UNAME}: /home/${UNAME} -R
   cd /home/${UNAME}
   exec sudo -H -u ${UNAME} $@
