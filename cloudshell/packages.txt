@@ -1,0 +1,11 @@
+rsync
+sudo
+parallel
+vim
+python
+python-pip
+jq
+ssh
+apt-transport-https
+ca-certificates
+software-properties-common

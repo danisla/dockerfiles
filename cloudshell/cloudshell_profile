@@ -1,0 +1,2 @@
+. /google-cloud-sdk/completion.bash.inc
+. /google-cloud-sdk/path.bash.inc
