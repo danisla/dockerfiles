@@ -2,6 +2,8 @@ rsync
 unzip
 p7zip
 ecm
+rar
+unrar
 sudo
 parallel
 vim
@@ -15,3 +17,6 @@ libid3-tools
 apt-transport-https
 ca-certificates
 software-properties-common
+iputils-ping
+dnsutils
+netcat

@@ -23,6 +23,9 @@ curl -sSL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-clou
 echo y | /google-cloud-sdk/bin/gcloud components install alpha beta kubectl bigtable datalab cloud-datastore-emulator pubsub-emulator docker-credential-gcr
 chmod ugo+rw -R /google-cloud-sdk/
 
+# Python pip upgrade
+pip install --upgrade pip
+
 # AWS Command Line Tools
 pip install --upgrade awscli
 
