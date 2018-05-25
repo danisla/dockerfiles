@@ -127,7 +127,7 @@ function gcr-list-tags() {
   fi
   curl -s -H "Accept: application/json" \
              "https://gcr.io/v2/${REPO}/tags/list" |
-               jq -r '.tags | sort'
+               jq -r '.tags[]' | sort --version-sort
 }
 
 function docker-host-root() {
