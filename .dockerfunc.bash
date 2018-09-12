@@ -1,6 +1,7 @@
 docker-cleanup(){
-  docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
-  docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+	docker ps --filter status=exited -q | xargs -I {} docker rm {} 2>/dev/null
+	docker ps --filter status=created -q | xargs -I {} docker rm {} 2>/dev/null
+	docker images --filter dangling=true -q | xargs -I {} docker rmi {} 2>/dev/null
 }
 
 docker-backup-cleanup(){
