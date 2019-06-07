@@ -4,12 +4,15 @@ set -e
 
 command -v docker >/dev/null || (echo "ERROR: docker not installed" && exit 1)
 
-DEST=/usr/local/bin/pcoip-client
+# Pull the docker image to reduce initial startup time
+docker pull danisla/pcoip-client:latest
+
+DEST="/usr/local/bin/pcoip-client"
 
 echo "INFO: Installing /usr/local/bin/pcoip-client"
 
-curl -sfLO https://raw.githubusercontent.com/danisla/dockerfiles/master/pcoip-client/pcoip-client.sh | \
-  sudo tee > ${DEST}
+curl -sfL https://raw.githubusercontent.com/danisla/dockerfiles/master/pcoip-client/pcoip-client.sh | \
+  sudo tee ${DEST} >/dev/null
 sudo chmod +x ${DEST}
 
 echo "INFO: Installing launcher shortcut"
