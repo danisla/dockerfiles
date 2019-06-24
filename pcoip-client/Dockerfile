@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y apt-transport-https
 # Install the client application
 RUN apt-get install -y pcoip-client
 
+# Install pulseaudio
+RUN apt-get install -y pulseaudio
+
 # Setup a functional user within the docker container with the same permissions as your local user.
 # Replace 1000 with your user / group id
 # Replace myuser with your local username
