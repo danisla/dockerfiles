@@ -260,3 +260,42 @@ function docker-cadvisor {
     --name=cadvisor \
     google/cadvisor:latest
 }
+
+function dc_trace_cmd() {
+  local parent=`docker inspect -f '{{ .Parent }}' $1` 2>/dev/null
+  declare -i level=$2
+  echo ${level}: `docker inspect -f '{{ .ContainerConfig.Cmd }}' $1 2>/dev/null`
+  level=level+1
+  if [ "${parent}" != "" ]; then
+    echo ${level}: $parent 
+    dc_trace_cmd $parent $level
+  fi
+}
+
+function docker-extract-appimage() {
+  local SRC_FILE=$1
+  local SRC_FILE_NAME=$(basename "$SRC_FILE")
+  local TS=$(date +%Y%m%d%H%M%S)
+  local TMP_DIR=$(mktemp -d)
+
+  [[ -d $PWD/appimage ]] && echo "ERROR: directory exists: ./appimage" && return 1
+
+  cp "${SRC_FILE}" "${TMP_DIR}/" 
+  cat - > "${TMP_DIR}/Dockerfile" <<EOF
+FROM ubuntu:16.04 as appimage
+WORKDIR /tmp
+COPY ${SRC_FILE_NAME} .
+RUN chmod +x ${SRC_FILE_NAME} && \
+    ./${SRC_FILE_NAME} --appimage-extract && \
+    find squashfs-root -type d -exec chmod ugo+rx {} \; && \
+    chown -R 1000:1000 squashfs-root
+EOF
+
+  (cd $TMP_DIR && docker build -t appimage-extract:$TS .)
+
+  ID=$(docker create appimage-extract:$TS)
+  docker cp $ID:/tmp/squashfs-root ./appimage
+  docker rm $ID
+
+  rm -rf "${TMP_DIR}"
+}
