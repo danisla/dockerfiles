@@ -299,3 +299,7 @@ EOF
 
   rm -rf "${TMP_DIR}"
 }
+
+function docker-skopeo() {
+  docker run --rm quay.io/skopeo/stable $@
+}
